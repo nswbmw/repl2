@@ -1,0 +1,22 @@
+{
+  "name": "repl2",
+  "description": "Load third-party modules into REPL from `.noderc`.",
+  "version": "1.0.0",
+  "bin": {
+    "noder": "./bin/repl2"  
+  },
+  "keywords": [
+    "repl",
+    "noder"
+  ],
+  "dependencies": {
+    "global-modules": "^0.2.0",
+    "home": "^0.1.8",
+    "lodash": "^3.10.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nswbmw/repl2"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+'use strict';
+
+var fs = require('fs');
+var path = require('path');
+var repl = require('repl');
+
+var _ = require('lodash');
+var home = require('home')();
+var globalPath = require('global-modules');
+var cwd = process.cwd();
+
+var noderc = {};
+try {
+  _.assign(noderc, JSON.parse(fs.readFileSync(path.join(home, '.noderc'), 'utf-8')));
+} catch(e) {}
+try {
+  _.assign(noderc, JSON.parse(fs.readFileSync(path.join(cwd, '.noderc'), 'utf-8')));
+} catch(e) {}
+
+var modules = {};
+_.each(noderc, function (value, key) {
+  var _module = tryRequire(key);
+  if (_module) {
+    modules[value] = _module;
+    console.log('%s = %s', value, key);
+  }
+});
+
+_.assign(repl.start('> ').context, modules);
+
+function tryRequire (name) {
+  var _module;
+  try {
+    _module = require(path.join(cwd, 'node_modules', name));
+    return _module;
+  } catch(e) {}
+  try {
+    _module = require(path.join(globalPath, name));
+  } catch(e) {}
+  return _module;
+}
