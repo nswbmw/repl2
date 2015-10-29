@@ -12,9 +12,9 @@ Load third-party modules into REPL from `.noderc`.
 $ noder
 ```
 
-**NB**: repl2 will try to read `.noderc` from current directory and user directory.
+**NB**: repl2 will try to read `.noderc` from current directory and user directory (like: `~/.noderc`).
 
-####.noderc
+#### .noderc
 
 ```
 {
