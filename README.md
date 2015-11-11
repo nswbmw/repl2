@@ -16,9 +16,13 @@ $ noder
 
 #### .noderc
 
+Example:
+
 ```
 {
-  "lodash": "__"
+  "lodash": "__",
+  "moment": "moment",
+  "validator": "validator"
 }
 ```
 
