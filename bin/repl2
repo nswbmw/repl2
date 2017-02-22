@@ -20,23 +20,33 @@ try {
 
 var modules = {};
 _.each(noderc, function (value, key) {
-  var _module = tryRequire(key);
-  if (_module) {
-    modules[value] = _module;
-    console.log('%s = %s', value, key);
+  var moduleInfo = tryRequire(key);
+  if (moduleInfo) {
+    modules[value] = moduleInfo.module;
+    console.log('%s = %s@%s', value, key, moduleInfo.version);
   }
 });
 
 _.assign(repl.start('> ').context, modules);
 
 function tryRequire (name) {
-  var _module;
+  var modulePath, _module, version;
   try {
-    _module = require(path.join(cwd, 'node_modules', name));
-    return _module;
+    modulePath = path.join(cwd, 'node_modules', name);
+    _module = require(modulePath);
+    version = require(modulePath + '/package.json').version;
   } catch(e) {}
+
   try {
-    _module = require(path.join(globalPath, name));
+    modulePath = path.join(path.join(globalPath, name));
+    _module = require(modulePath);
+    version = require(modulePath + '/package.json').version;
   } catch(e) {}
-  return _module;
+
+  if (_module && version) {
+    return {
+      module: _module,
+      version: version
+    };
+  }
 }

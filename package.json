@@ -1,7 +1,7 @@
 {
   "name": "repl2",
   "description": "Load third-party modules into REPL from `.noderc`.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "bin": {
     "noder": "./bin/repl2"  
   },
