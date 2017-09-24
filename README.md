@@ -1,24 +1,24 @@
 ## repl2
 
-Load third-party modules into REPL from `.noderc`.
+Load third-party modules into REPL from `~/.noderc`.
 
 ### Install
 
-    npm i repl2 -g
+```sh
+$ npm i repl2 -g
+```
 
 ### Usage
 
-```
+```sh
 $ noder
 ```
 
-**NB**: repl2 will try to read `.noderc` from current directory and user directory (like: `~/.noderc`).
-
-#### .noderc
+### ~/.noderc
 
 Example:
 
-```
+```json
 {
   "lodash": "__",
   "moment": "moment",

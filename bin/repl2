@@ -1,52 +1,55 @@
 #!/usr/bin/env node
-'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var repl = require('repl');
+const fs = require('fs')
+const path = require('path')
+const repl = require('repl')
 
-var _ = require('lodash');
-var home = require('home')();
-var globalPath = require('global-modules');
-var cwd = process.cwd();
+const home = require('home')()
+const globalModulesPath = require('global-modules')
 
-var noderc = {};
-try {
-  _.assign(noderc, JSON.parse(fs.readFileSync(path.join(home, '.noderc'), 'utf-8')));
-} catch(e) {}
-try {
-  _.assign(noderc, JSON.parse(fs.readFileSync(path.join(cwd, '.noderc'), 'utf-8')));
-} catch(e) {}
+const cwd = process.cwd()
+const modules = {}
+const noderc = tryLoadConfig()
 
-var modules = {};
-_.each(noderc, function (value, key) {
-  var moduleInfo = tryRequire(key);
+for (let moduleName in noderc) {
+  const name = noderc[moduleName]
+  const moduleInfo = tryRequireModule(moduleName)
   if (moduleInfo) {
-    modules[value] = moduleInfo.module;
-    console.log('%s = %s@%s', value, key, moduleInfo.version);
+    modules[name] = moduleInfo.module
+    console.log('%s = %s@%s -> %s', name, moduleName, moduleInfo.version, moduleInfo.source)
   }
-});
+}
 
-_.assign(repl.start('> ').context, modules);
+Object.assign(repl.start('> ').context, modules)
 
-function tryRequire (name) {
-  var modulePath, _module, version;
+function tryLoadConfig () {
   try {
-    modulePath = path.join(cwd, 'node_modules', name);
-    _module = require(modulePath);
-    version = require(modulePath + '/package.json').version;
-  } catch(e) {}
+    return JSON.parse(fs.readFileSync(path.join(home, '.noderc'), 'utf-8'))
+  } catch (e) {}
+}
+
+function tryRequireModule (moduleName) {
+  let modulePath, _module, version, source
 
   try {
-    modulePath = path.join(path.join(globalPath, name));
-    _module = require(modulePath);
-    version = require(modulePath + '/package.json').version;
-  } catch(e) {}
+    modulePath = path.join(globalModulesPath, moduleName)
+    _module = require(modulePath)
+    version = require(path.join(modulePath, 'package.json')).version
+    source = 'global'
+  } catch (e) {}
+
+  try {
+    modulePath = path.join(cwd, 'node_modules', moduleName)
+    _module = require(modulePath)
+    version = require(path.join(modulePath, 'package.json')).version
+    source = 'local'
+  } catch (e) {}
 
   if (_module && version) {
     return {
       module: _module,
-      version: version
-    };
+      version,
+      source
+    }
   }
 }
