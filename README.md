@@ -14,9 +14,11 @@ $ npm i repl2 -g
 $ noder
 ```
 
-### ~/.noderc
+First:
 
-Example:
+```sh
+$ vim ~/.noderc
+```
 
 ```json
 {
@@ -24,6 +26,18 @@ Example:
   "moment": "moment",
   "validator": "validator"
 }
+```
+
+Second:
+
+```sh
+$ npm i lodash moment validator -g
+```
+
+Three:
+
+```sh
+$ noder
 ```
 
 ### License
