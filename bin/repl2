@@ -11,7 +11,7 @@ const cwd = process.cwd()
 const modules = {}
 const noderc = tryLoadConfig()
 
-for (let moduleName in noderc) {
+for (const moduleName in noderc) {
   const name = noderc[moduleName]
   const moduleInfo = tryRequireModule(moduleName)
   if (moduleInfo) {

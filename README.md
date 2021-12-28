@@ -10,11 +10,7 @@ $ npm i repl2 -g
 
 ### Usage
 
-```sh
-$ noder
-```
-
-First:
+Step 1:
 
 ```sh
 $ vim ~/.noderc
@@ -28,16 +24,18 @@ $ vim ~/.noderc
 }
 ```
 
-Second:
+Step 2:
 
 ```sh
 $ npm i lodash moment validator -g
 ```
 
-Three:
+Step 3:
 
 ```sh
 $ noder
+> moment()
+> validator.isEmail('xxx')
 ```
 
 ### License

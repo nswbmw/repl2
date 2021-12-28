@@ -1,7 +1,7 @@
 {
   "name": "repl2",
   "description": "Load third-party modules into REPL from `.noderc`.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "bin": {
     "noder": "./bin/repl2"
   },
@@ -10,8 +10,8 @@
     "noder"
   ],
   "dependencies": {
-    "global-modules": "^1.0.0",
-    "home": "^1.0.1"
+    "global-modules": "^2.0.0",
+    "home": "^2.0.0"
   },
   "repository": {
     "type": "git",
@@ -19,11 +19,11 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "eslint-config-standard": "10.2.1",
-    "eslint-plugin-import": "2.7.0",
-    "eslint-plugin-node": "5.1.1",
-    "eslint-plugin-promise": "3.5.0",
-    "eslint-plugin-standard": "3.0.1"
+    "eslint-config-standard": "16.0.3",
+    "eslint-plugin-import": "2.25.3",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "6.0.0",
+    "eslint-plugin-standard": "4.1.0"
   },
   "engines": {
     "node": ">=6"
